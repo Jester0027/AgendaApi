@@ -1,4 +1,6 @@
 using AgendaApi.Model;
+using AgendaApi.Model.Consultation;
+using AgendaApi.Model.Patient;
 using AgendaApi.Model.User;
 using Microsoft.EntityFrameworkCore;
 

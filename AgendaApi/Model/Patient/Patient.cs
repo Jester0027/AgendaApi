@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AgendaApi.Model
+namespace AgendaApi.Model.Patient
 {
     public class Patient
     {

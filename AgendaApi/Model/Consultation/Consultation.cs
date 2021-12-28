@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AgendaApi.Model
+namespace AgendaApi.Model.Consultation
 {
     public class Consultation
     {
@@ -14,6 +14,6 @@ namespace AgendaApi.Model
         [ForeignKey("DoctorId")]
         public User.User Doctor { get; set; }
         [ForeignKey("PatientId")]
-        public Patient Patient { get; set; }
+        public Patient.Patient Patient { get; set; }
     }
 }
