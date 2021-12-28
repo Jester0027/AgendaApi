@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaApi", "AgendaApi\AgendaApi.csproj", "{3232C7AB-3A74-4A29-990B-4112180CB5F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaApiTests", "AgendaApiTests\AgendaApiTests.csproj", "{8B71B7E0-95B5-4BB1-8975-871104686905}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3232C7AB-3A74-4A29-990B-4112180CB5F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3232C7AB-3A74-4A29-990B-4112180CB5F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3232C7AB-3A74-4A29-990B-4112180CB5F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B71B7E0-95B5-4BB1-8975-871104686905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B71B7E0-95B5-4BB1-8975-871104686905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B71B7E0-95B5-4BB1-8975-871104686905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B71B7E0-95B5-4BB1-8975-871104686905}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
