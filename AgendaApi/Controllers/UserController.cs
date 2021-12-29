@@ -1,6 +1,8 @@
 using AgendaApi.Model.User;
 using AgendaApi.Services.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace AgendaApi.Controllers
 {
@@ -9,14 +11,16 @@ namespace AgendaApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpGet]
-        public IActionResult GetAllUsers([FromQuery] int? page, [FromQuery] int? limit = 10)
+        public IActionResult GetUsers([FromQuery] int? page, [FromQuery] int? limit = 10)
         {
             if (page == null)
             {
@@ -44,6 +48,7 @@ namespace AgendaApi.Controllers
         public IActionResult CreateUser([FromBody] UserCreateDto userCreateDto)
         {
             var user = _userService.Create(userCreateDto);
+            _logger.LogDebug("User inserted : {user}", JsonConvert.SerializeObject(user));
             return CreatedAtRoute("GetUser", new {id = user.Id}, user);
         }
 
@@ -52,9 +57,11 @@ namespace AgendaApi.Controllers
         {
             if (!_userService.Update(userUpdateDto))
             {
+                _logger.LogDebug("An error occured while updating the user : {user}", JsonConvert.SerializeObject(userUpdateDto));
                 return BadRequest(ModelState);
             }
-
+            
+            _logger.LogDebug("User updated : {user}", JsonConvert.SerializeObject(userUpdateDto));
             return NoContent();
         }
 
@@ -63,14 +70,17 @@ namespace AgendaApi.Controllers
         {
             if (_userService.GetById(id) == null)
             {
+                _logger.LogDebug("User not found at id : {id}", id);
                 return NotFound();
             }
 
             if (!_userService.Delete(id))
             {
+                _logger.LogDebug("An error occured while deleting the user with the id : {id}", id);
                 return BadRequest(ModelState);
             }
 
+            _logger.LogDebug("User with id \"{id}\" successfully deleted", id);
             return NoContent();
         }
     }
