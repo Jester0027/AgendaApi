@@ -22,5 +22,9 @@ namespace AgendaApi.Model.Page
             LastPage = lastPage;
             Step = limit;
         }
+
+        public PageMetadata()
+        {
+        }
     }
 }
