@@ -15,9 +15,11 @@ namespace AgendaApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public IActionResult GetAllUsers([FromQuery] int? page, [FromQuery] int? limit = 10)
         {
-            return Ok(_userRepository.FindAll());
+            return page != null
+                ? Ok(_userRepository.GetPage((int) page, limit ?? 10))
+                : Ok(_userRepository.FindAll());
         }
 
         [HttpGet("{id:int}")]

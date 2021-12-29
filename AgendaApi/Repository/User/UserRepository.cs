@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AgendaApi.Data;
+using AgendaApi.Model.Page;
 
 namespace AgendaApi.Repository.User
 {
@@ -11,6 +13,18 @@ namespace AgendaApi.Repository.User
         public UserRepository(ApplicationDbContext db)
         {
             _db = db;
+        }
+
+        public Page<Model.User.User> GetPage(int page, int limit)
+        {
+            var count = _db.Users.Count();
+            var users = _db.Users.Skip(page * limit - limit).Take(limit).ToList();
+            var meta = new PageMetadata(page, limit, count);
+            return new Page<Model.User.User>
+            {
+                Data = users,
+                Meta = meta
+            };
         }
 
         public List<Model.User.User> FindAll()
