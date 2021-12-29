@@ -14,10 +14,11 @@ namespace AgendaApi.Model.Page
         public PageMetadata(int page, int limit, int count)
         {
             var lastPage = (int) Math.Ceiling((decimal) count / limit);
+            lastPage = lastPage == 0 ? 1 : lastPage;
             TotalCount = count;
             CurrentPage = page;
-            PrevPage = page + 1 <= lastPage ? page + 1 : null;
-            NextPage = page - 1 > 0 ? page - 1 : null;
+            PrevPage = page - 1 > 0 ? page - 1 : null;
+            NextPage = page + 1 <= lastPage ? page + 1 : null;
             LastPage = lastPage;
             Step = limit;
         }
