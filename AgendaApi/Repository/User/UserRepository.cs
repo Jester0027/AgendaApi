@@ -37,10 +37,11 @@ namespace AgendaApi.Repository.User
             return _db.Users.SingleOrDefault(u => u.Id == id);
         }
 
-        public bool Add(Model.User.User user)
+        public Model.User.User Add(Model.User.User user)
         {
-            _db.Users.Add(user);
-            return Save();
+            var userEntity = _db.Users.Add(user);
+            Save();
+            return userEntity.Entity;
         }
 
         public bool Update(Model.User.User user)

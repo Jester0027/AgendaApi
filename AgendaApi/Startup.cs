@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AgendaApi.Data;
+using AgendaApi.Mapper;
 using AgendaApi.Repository.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,8 @@ namespace AgendaApi
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddAutoMapper(typeof(ApplicationMappings));
             
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "AgendaApi", Version = "v1"}); });
         }
