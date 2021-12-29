@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgendaApi.Data;
 using AgendaApi.Mapper;
-using AgendaApi.Repository.User;
+using AgendaApi.Repositories.User;
+using AgendaApi.Services.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,10 +37,15 @@ namespace AgendaApi
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
 
+            // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
 
+            // Services
+            services.AddScoped<IUserService, UserService>();
+
+
             services.AddAutoMapper(typeof(ApplicationMappings));
-            
+
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "AgendaApi", Version = "v1"}); });
         }
 

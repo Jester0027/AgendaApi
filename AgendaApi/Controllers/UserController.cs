@@ -1,11 +1,6 @@
-using System;
-using System.Linq;
-using AgendaApi.Model.Page;
 using AgendaApi.Model.User;
-using AgendaApi.Repository.User;
-using AutoMapper;
+using AgendaApi.Services.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace AgendaApi.Controllers
 {
@@ -13,13 +8,11 @@ namespace AgendaApi.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserService userService)
         {
-            _userRepository = userRepository;
-            _mapper = mapper;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -27,24 +20,18 @@ namespace AgendaApi.Controllers
         {
             if (page == null)
             {
-                var users = _userRepository.FindAll();
-                var dtos = users.Select(u => _mapper.Map<UserDto>(u)).ToList();
-                return Ok(dtos);
+                var users = _userService.GetAll();
+                return Ok(users);
             }
 
-            var usersPage = _userRepository.GetPage((int) page, limit ?? 10);
-            var userDtos = usersPage.Data.Select(u => _mapper.Map<UserDto>(u)).ToList();
-            return Ok(new Page<UserDto>
-            {
-                Data = userDtos,
-                Meta = usersPage.Meta
-            });
+            var usersPage = _userService.GetPage((int) page, limit ?? 10);
+            return Ok(usersPage);
         }
 
         [HttpGet("{id:int}", Name = "GetUser")]
         public IActionResult GetUserById(int id)
         {
-            var user = _userRepository.GetById(id);
+            var user = _userService.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -56,16 +43,14 @@ namespace AgendaApi.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserCreateDto userCreateDto)
         {
-            var user = _mapper.Map<User>(userCreateDto);
-            _userRepository.Add(user);
+            var user = _userService.Create(userCreateDto);
             return CreatedAtRoute("GetUser", new {id = user.Id}, user);
         }
 
         [HttpPut]
         public IActionResult UpdateUser([FromBody] UserUpdateDto userUpdateDto)
         {
-            var user = _mapper.Map<User>(userUpdateDto);
-            if (!_userRepository.Update(user))
+            if (!_userService.Update(userUpdateDto))
             {
                 return BadRequest(ModelState);
             }
@@ -76,12 +61,12 @@ namespace AgendaApi.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult DeleteUser(int id)
         {
-            if (_userRepository.GetById(id) == null)
+            if (_userService.GetById(id) == null)
             {
                 return NotFound();
             }
 
-            if (!_userRepository.Delete(id))
+            if (!_userService.Delete(id))
             {
                 return BadRequest(ModelState);
             }
