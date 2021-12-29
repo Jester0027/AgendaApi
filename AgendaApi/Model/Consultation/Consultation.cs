@@ -9,6 +9,7 @@ namespace AgendaApi.Model.Consultation
         [Key]
         public long Id { get; set; }
         public DateTime Date { get; set; }
+        public ConsultationStatus Status { get; set; }
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
         [ForeignKey("DoctorId")]
