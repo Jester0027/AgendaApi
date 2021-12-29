@@ -6,6 +6,7 @@ using AgendaApi.Data;
 using AgendaApi.Mapper;
 using AgendaApi.Repositories.Patient;
 using AgendaApi.Repositories.User;
+using AgendaApi.Services.Patient;
 using AgendaApi.Services.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PatientRepository = AgendaApi.Repositories.Patient.PatientRepository;
 
 namespace AgendaApi
 {
@@ -44,6 +46,7 @@ namespace AgendaApi
 
             // Services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPatientService, PatientService>();
 
 
             services.AddAutoMapper(typeof(ApplicationMappings));
