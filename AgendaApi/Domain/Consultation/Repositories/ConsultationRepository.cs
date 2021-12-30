@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AgendaApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaApi.Domain.Consultation.Repositories
 {
@@ -15,17 +16,28 @@ namespace AgendaApi.Domain.Consultation.Repositories
 
         public List<Models.Consultation> GetPage(int page, int limit)
         {
-            return _db.Consultations.Skip(page * limit - limit).Take(limit).ToList();
+            return _db.Consultations
+                .Include(c => c.Doctor)
+                .Include(c => c.Patient)
+                .Skip(page * limit - limit)
+                .Take(limit)
+                .ToList();
         }
 
         public List<Models.Consultation> FindAll()
         {
-            return _db.Consultations.ToList();
+            return _db.Consultations
+                .Include(c => c.Doctor)
+                .Include(c => c.Patient)
+                .ToList();
         }
 
         public Models.Consultation GetById(int id)
         {
-            return _db.Consultations.SingleOrDefault(c => c.Id == id);
+            return _db.Consultations
+                .Include(c => c.Doctor)
+                .Include(c => c.Patient)
+                .SingleOrDefault(c => c.Id == id);
         }
 
         public Models.Consultation Add(Models.Consultation consultation)

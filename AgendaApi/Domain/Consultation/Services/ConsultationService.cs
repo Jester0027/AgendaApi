@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AgendaApi.Domain.Consultation.Models;
 using AgendaApi.Domain.Consultation.Repositories;
+using AgendaApi.Domain.User.Models;
+using AgendaApi.Domain.User.Services;
 using AgendaApi.Models.Page;
 using AutoMapper;
 
@@ -10,12 +13,23 @@ namespace AgendaApi.Domain.Consultation.Services
     public class ConsultationService : IConsultationService
     {
         private readonly IConsultationRepository _consultationRepository;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public ConsultationService(IConsultationRepository consultationRepository, IMapper mapper)
+        public ConsultationService(IConsultationRepository consultationRepository, IMapper mapper, IUserService userService)
         {
             _consultationRepository = consultationRepository;
             _mapper = mapper;
+            _userService = userService;
+        }
+
+        private void CheckUserIsDoctor(int id)
+        {
+            var user = _userService.GetById(id);
+            if (user.Role != Role.Doctor.ToString())
+            {
+                throw new Exception("The user id passed is not a doctor id");
+            }
         }
 
         public Page<ConsultationDto> GetPage(int page, int limit)
@@ -43,6 +57,7 @@ namespace AgendaApi.Domain.Consultation.Services
 
         public Models.Consultation Create(ConsultationCreateDto consultationCreateDto)
         {
+            CheckUserIsDoctor(consultationCreateDto.DoctorId);
             var consultation = _mapper.Map<Models.Consultation>(consultationCreateDto);
             var result = _consultationRepository.Add(consultation);
             return result;
