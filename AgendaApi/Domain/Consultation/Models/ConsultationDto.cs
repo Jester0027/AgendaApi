@@ -21,8 +21,6 @@ namespace AgendaApi.Domain.Consultation.Models
         [ValidConsultationDate]
         public DateTime Date { get; set; }
         [Required]
-        public string Status { get; set; }
-        [Required]
         public int DoctorId { get; set; }
         [Required]
         public int PatientId { get; set; }

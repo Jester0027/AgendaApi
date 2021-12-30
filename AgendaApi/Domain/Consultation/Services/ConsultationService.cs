@@ -59,6 +59,7 @@ namespace AgendaApi.Domain.Consultation.Services
         {
             CheckUserIsDoctor(consultationCreateDto.DoctorId);
             var consultation = _mapper.Map<Models.Consultation>(consultationCreateDto);
+            consultation.Status = ConsultationStatus.Pending;
             var result = _consultationRepository.Add(consultation);
             return result;
         }
