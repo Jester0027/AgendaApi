@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AgendaApi.Data;
+using AgendaApi.Domain.Consultation.Repositories;
+using AgendaApi.Domain.Consultation.Services;
+using AgendaApi.Domain.Patient.Repositories;
+using AgendaApi.Domain.Patient.Services;
+using AgendaApi.Domain.User.Repositories;
+using AgendaApi.Domain.User.Services;
 using AgendaApi.Mapper;
-using AgendaApi.Repositories.Consultation;
-using AgendaApi.Repositories.Patient;
-using AgendaApi.Repositories.User;
-using AgendaApi.Services.Consultation;
-using AgendaApi.Services.Patient;
-using AgendaApi.Services.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -20,7 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PatientRepository = AgendaApi.Repositories.Patient.PatientRepository;
+using PatientRepository = AgendaApi.Domain.Patient.Repositories.PatientRepository;
 
 namespace AgendaApi
 {

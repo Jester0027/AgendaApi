@@ -1,7 +1,7 @@
-using AgendaApi.Model;
-using AgendaApi.Model.Consultation;
-using AgendaApi.Model.Patient;
-using AgendaApi.Model.User;
+using AgendaApi.Domain.Consultation.Models;
+using AgendaApi.Domain.Patient.Models;
+using AgendaApi.Domain.User.Models;
+using AgendaApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaApi.Data

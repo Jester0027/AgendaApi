@@ -1,5 +1,5 @@
 using System;
-using AgendaApi.Model.Page;
+using AgendaApi.Models.Page;
 using Xunit;
 
 namespace AgendaApiTests.Model.Page

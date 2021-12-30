@@ -1,6 +1,6 @@
-using AgendaApi.Model.Consultation;
-using AgendaApi.Model.Patient;
-using AgendaApi.Model.User;
+using AgendaApi.Domain.Consultation.Models;
+using AgendaApi.Domain.Patient.Models;
+using AgendaApi.Domain.User.Models;
 using AutoMapper;
 
 namespace AgendaApi.Mapper
