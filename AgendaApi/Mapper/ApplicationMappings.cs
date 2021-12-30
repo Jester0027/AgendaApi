@@ -1,3 +1,4 @@
+using AgendaApi.Model.Consultation;
 using AgendaApi.Model.Patient;
 using AgendaApi.Model.User;
 using AutoMapper;
@@ -15,6 +16,10 @@ namespace AgendaApi.Mapper
             CreateMap<Patient, PatientDto>().ReverseMap();
             CreateMap<Patient, PatientCreateDto>().ReverseMap();
             CreateMap<Patient, PatientUpdateDto>().ReverseMap();
+
+            CreateMap<Consultation, ConsultationDto>().ReverseMap();
+            CreateMap<Consultation, ConsultationCreateDto>().ReverseMap();
+            CreateMap<Consultation, ConsultationUpdateDto>().ReverseMap();
         }
     }
 }
