@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgendaApi.Data;
 using AgendaApi.Mapper;
+using AgendaApi.Repositories.Consultation;
 using AgendaApi.Repositories.Patient;
 using AgendaApi.Repositories.User;
+using AgendaApi.Services.Consultation;
 using AgendaApi.Services.Patient;
 using AgendaApi.Services.User;
 using Microsoft.AspNetCore.Builder;
@@ -43,10 +45,12 @@ namespace AgendaApi
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IConsultationRepository, ConsultationRepository>();
 
             // Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IConsultationService, ConsultationService>();
 
 
             services.AddAutoMapper(typeof(ApplicationMappings));
