@@ -28,6 +28,11 @@ namespace AgendaApi.Domain.User.Repositories
             return _db.Users.SingleOrDefault(u => u.Id == id);
         }
 
+        public Models.User GetByEmail(string email)
+        {
+            return _db.Users.FirstOrDefault(u => u.Email.ToLower().Trim() == email.ToLower().Trim());
+        }
+
         public Models.User Add(Models.User user)
         {
             var userEntity = _db.Users.Add(user);

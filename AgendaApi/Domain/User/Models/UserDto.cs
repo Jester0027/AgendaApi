@@ -44,4 +44,12 @@ namespace AgendaApi.Domain.User.Models
         [RegularExpression("^Secretary|Doctor$", ErrorMessage = "The role should be either \"Secretary\" or \"Doctor\"")]
         public string Role { get; set; }
     }
+
+    public class UserLoginDto
+    {
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
 }

@@ -7,6 +7,7 @@ namespace AgendaApi.Domain.User.Repositories
         List<Models.User> GetPage(int page, int limit);
         List<Models.User> FindAll();
         Models.User GetById(int id);
+        Models.User GetByEmail(string email);
         Models.User Add(Models.User user);
         bool Update(Models.User user);
         bool Delete(int id);

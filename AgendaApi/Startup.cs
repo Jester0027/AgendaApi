@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using AgendaApi.Data;
+using AgendaApi.Domain.Auth.Services;
 using AgendaApi.Domain.Consultation.Repositories;
 using AgendaApi.Domain.Consultation.Services;
 using AgendaApi.Domain.Patient.Repositories;
@@ -10,15 +8,14 @@ using AgendaApi.Domain.Patient.Services;
 using AgendaApi.Domain.User.Repositories;
 using AgendaApi.Domain.User.Services;
 using AgendaApi.Mapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PatientRepository = AgendaApi.Domain.Patient.Repositories.PatientRepository;
 
@@ -51,7 +48,18 @@ namespace AgendaApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IConsultationService, ConsultationService>();
+            services.AddScoped<IAuthService, JwtAuthService>();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"]))
+                    };
+                });
 
             services.AddAutoMapper(typeof(ApplicationMappings));
 
@@ -72,6 +80,7 @@ namespace AgendaApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
