@@ -1,12 +1,14 @@
 using AgendaApi.Domain.Patient.Models;
 using AgendaApi.Domain.Patient.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace AgendaApi.Controllers
+namespace AgendaApi.Domain.Patient.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/patients")]
     public class PatientController : ControllerBase
     {

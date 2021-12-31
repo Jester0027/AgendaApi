@@ -5,6 +5,7 @@ using AgendaApi.Domain.Consultation.Repositories;
 using AgendaApi.Domain.Consultation.Services;
 using AgendaApi.Domain.Patient.Repositories;
 using AgendaApi.Domain.Patient.Services;
+using AgendaApi.Domain.User.Models;
 using AgendaApi.Domain.User.Repositories;
 using AgendaApi.Domain.User.Services;
 using AgendaApi.Mapper;
@@ -48,7 +49,8 @@ namespace AgendaApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IConsultationService, ConsultationService>();
-            services.AddScoped<IAuthService, JwtAuthService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddSingleton<IJwtService<User>, JwtUserService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

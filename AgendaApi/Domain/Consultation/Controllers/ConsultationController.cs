@@ -1,5 +1,6 @@
 using AgendaApi.Domain.Consultation.Models;
 using AgendaApi.Domain.Consultation.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 namespace AgendaApi.Domain.Consultation.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/consultations")]
     public class ConsultationController : ControllerBase
     {
