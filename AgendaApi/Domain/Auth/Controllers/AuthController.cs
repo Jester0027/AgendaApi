@@ -1,3 +1,4 @@
+using System;
 using AgendaApi.Domain.Auth.Services;
 using AgendaApi.Domain.User.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgendaApi.Domain.Auth.Controllers
 {
     [ApiController]
-    // [Authorize]
+    [Authorize]
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
@@ -21,8 +22,21 @@ namespace AgendaApi.Domain.Auth.Controllers
 
         [HttpGet("validate")]
         [AllowAnonymous]
-        public IActionResult Validate([FromQuery] string token)
+        public IActionResult Validate([FromHeader(Name = "Authorization")] string auth)
         {
+            string token;
+            try
+            {
+                if (auth == null)
+                {
+                    throw new Exception();
+                }
+                token = auth.Split(" ")[1];
+            }
+            catch
+            {
+                return Unauthorized();
+            }
             var isValid = _jwtUserService.Validate(token);
             return isValid ? NoContent() : Unauthorized();
         }
@@ -40,8 +54,7 @@ namespace AgendaApi.Domain.Auth.Controllers
         }
 
         [HttpPost("register", Name = "Register")]
-        [Authorize(Roles = "Secretary")]
-        [ValidateAntiForgeryToken]
+        [Authorize(Roles = nameof(Role.Secretary))]
         public IActionResult Register([FromBody] UserCreateDto userCreateDto)
         {
             var user = _authService.Register(userCreateDto);

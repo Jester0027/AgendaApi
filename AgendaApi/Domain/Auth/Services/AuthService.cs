@@ -1,13 +1,7 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using AgendaApi.Domain.User.Models;
 using AgendaApi.Domain.User.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AgendaApi.Domain.Auth.Services
 {

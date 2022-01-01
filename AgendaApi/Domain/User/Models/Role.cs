@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq;
 
 namespace AgendaApi.Domain.User.Models
 {
@@ -9,7 +10,6 @@ namespace AgendaApi.Domain.User.Models
         Doctor = 0,
         [Description("Secretary")]
         Secretary = 1
-        
     }
 
     public static class RoleUtils

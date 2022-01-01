@@ -1,5 +1,6 @@
 using AgendaApi.Domain.User.Models;
 using AgendaApi.Domain.User.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 namespace AgendaApi.Domain.User.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/users")]
     public class UserController : ControllerBase
     {
